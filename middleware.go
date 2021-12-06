@@ -30,7 +30,7 @@ var reqDur = &Metric{
 	ID:          "reqDur",
 	Name:        "request_duration_seconds",
 	Description: "The HTTP request latencies in seconds.",
-	Type:        "histogram_vec",
+	Type:        "summary_vec",
 	Args:        []string{"code", "method", "url"},
 }
 
@@ -88,7 +88,7 @@ type Metric struct {
 // Prometheus contains the metrics gathered by the instance and its path
 type Prometheus struct {
 	reqCnt        *prometheus.CounterVec
-	reqDur        *prometheus.HistogramVec
+	reqDur        *prometheus.SummaryVec
 	reqSz, resSz  prometheus.Summary
 	router        *gin.Engine
 	listenAddress string
@@ -335,7 +335,7 @@ func (p *Prometheus) registerMetrics(subsystem string) {
 		case reqCnt:
 			p.reqCnt = metric.(*prometheus.CounterVec)
 		case reqDur:
-			p.reqDur = metric.(*prometheus.HistogramVec)
+			p.reqDur = metric.(*prometheus.SummaryVec)
 		case resSz:
 			p.resSz = metric.(prometheus.Summary)
 		case reqSz:
