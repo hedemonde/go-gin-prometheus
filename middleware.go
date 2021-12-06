@@ -288,6 +288,7 @@ func NewMetric(m *Metric, subsystem string) prometheus.Collector {
 				Subsystem: subsystem,
 				Name:      m.Name,
 				Help:      m.Description,
+				Buckets:   []float64{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 30, 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000},
 			},
 			m.Args,
 		)
@@ -297,23 +298,26 @@ func NewMetric(m *Metric, subsystem string) prometheus.Collector {
 				Subsystem: subsystem,
 				Name:      m.Name,
 				Help:      m.Description,
+				Buckets:   []float64{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 30, 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000},
 			},
 		)
 	case "summary_vec":
 		metric = prometheus.NewSummaryVec(
 			prometheus.SummaryOpts{
-				Subsystem: subsystem,
-				Name:      m.Name,
-				Help:      m.Description,
+				Subsystem:  subsystem,
+				Name:       m.Name,
+				Help:       m.Description,
+				Objectives: map[float64]float64{0.5: 0.01, 0.8: 0.01, 0.9: 0.01, 0.95: 0.001, 0.99: 0.001},
 			},
 			m.Args,
 		)
 	case "summary":
 		metric = prometheus.NewSummary(
 			prometheus.SummaryOpts{
-				Subsystem: subsystem,
-				Name:      m.Name,
-				Help:      m.Description,
+				Subsystem:  subsystem,
+				Name:       m.Name,
+				Help:       m.Description,
+				Objectives: map[float64]float64{0.5: 0.01, 0.8: 0.01, 0.9: 0.01, 0.95: 0.001, 0.99: 0.001},
 			},
 		)
 	}
